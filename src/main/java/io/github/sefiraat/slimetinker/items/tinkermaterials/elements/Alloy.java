@@ -9,6 +9,7 @@ import io.github.sefiraat.slimetinker.utils.ThemeUtils;
 import io.github.sefiraat.slimetinker.utils.enums.ThemeItemType;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +39,13 @@ public class Alloy {
             );
         SlimefunItemStack[] alloyRecipe = parent.getAlloyRecipe();
         Preconditions.checkNotNull(alloyRecipe, "Alloy recipe is null. SefiDumb™");
-        this.item = new SlimefunItem(ItemGroups.ALLOYS, itemStack, DummySmelteryAlloy.TYPE, alloyRecipe);
+
+        ItemStack[] alloyRecipeItems = new ItemStack[alloyRecipe.length];
+        for (int i = 0; i < alloyRecipe.length; i++) {
+            alloyRecipeItems[i] = alloyRecipe[i].item();
+        }
+
+        this.item = new SlimefunItem(ItemGroups.ALLOYS, itemStack, DummySmelteryAlloy.TYPE, alloyRecipeItems);
         item.register(SlimeTinker.getInstance());
         for (SlimefunItemStack i : parent.getAlloyRecipe()) {
             alloyMap.put(i.getItemId().replace("_LIQUID", ""), i.getAmount());

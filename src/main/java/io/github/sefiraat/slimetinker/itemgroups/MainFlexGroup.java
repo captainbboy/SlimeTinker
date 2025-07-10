@@ -22,7 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 public class MainFlexGroup extends FlexItemGroup {
 
-    private static final ItemStack DOCS_ITEM_STACK = new CustomItemStack(
+    private static final ItemStack DOCS_ITEM_STACK = CustomItemStack.create(
         Material.BOOK,
         ThemeUtils.GUIDE + "Documentation Wiki",
         ThemeUtils.PASSIVE + "Click to get the link to the",

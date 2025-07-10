@@ -10,6 +10,7 @@ import io.github.sefiraat.slimetinker.utils.ItemUtils;
 import io.github.sefiraat.slimetinker.utils.Keys;
 import io.github.sefiraat.slimetinker.utils.ThemeUtils;
 import io.github.sefiraat.slimetinker.utils.WorldUtils;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.data.persistent.PersistentDataAPI;
 import org.bukkit.Color;
 import org.bukkit.Effect;
@@ -130,11 +131,11 @@ public final class PlayerDamagedEvents {
                 p.setHealth(1);
                 friend.setDamageMod(0);
                 Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(20, 20, 20), 2);
-                p.getWorld().spawnParticle(Particle.REDSTONE, p.getLocation(), 30, 3, 3, 3, 1, dustOptions);
+                p.getWorld().spawnParticle(Particle.DUST, p.getLocation(), 30, 3, 3, 3, 1, dustOptions);
                 Particle.DustOptions dustOptions2 = new Particle.DustOptions(Color.fromRGB(1, 1, 1), 2);
-                p.getWorld().spawnParticle(Particle.REDSTONE, p.getLocation(), 30, 3, 3, 3, 1, dustOptions2);
+                p.getWorld().spawnParticle(Particle.DUST, p.getLocation(), 30, 3, 3, 3, 1, dustOptions2);
                 Particle.DustOptions dustOptions3 = new Particle.DustOptions(Color.fromRGB(40, 40, 40), 2);
-                p.getWorld().spawnParticle(Particle.REDSTONE, p.getLocation(), 30, 3, 3, 3, 1, dustOptions3);
+                p.getWorld().spawnParticle(Particle.DUST, p.getLocation(), 30, 3, 3, 3, 1, dustOptions3);
                 p.sendMessage(ThemeUtils.WARNING + "Protective has saved you from death. It's now on cooldown - take care!");
                 ItemUtils.setCooldown(i, "PROTECTIVE", 1200000);
             } else {
@@ -393,7 +394,7 @@ public final class PlayerDamagedEvents {
             friend.setCancelEvent(true);
             LivingEntity l = (LivingEntity) friend.getDamagingEntity();
             l.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
-            l.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, l.getLocation(), 3, 0.2, 0.2, 0.2);
+            l.getWorld().spawnParticle(Particle.FIREWORK, l.getLocation(), 3, 0.2, 0.2, 0.2);
             l.damage(friend.getInitialDamage(), friend.getPlayer());
         }
     }
@@ -413,7 +414,7 @@ public final class PlayerDamagedEvents {
     public static void plateFortune(EventFriend friend) {
         if (friend.getInitialDamage() >= 1 && GeneralUtils.testChance(1, 200)) {
             int roll = GeneralUtils.roll(100);
-            ItemStack i;
+            SlimefunItemStack i;
             if (roll < 5) {
                 i = Materials.NUGGET_CAST_ADAMANTITE.clone();
             } else if (roll < 10) {
@@ -453,7 +454,7 @@ public final class PlayerDamagedEvents {
             } else {
                 i = Materials.NUGGET_CAST_COAL.clone();
             }
-            WorldUtils.dropItem(i, friend.getPlayer());
+            WorldUtils.dropItem(i.item(), friend.getPlayer());
         }
     }
 
@@ -622,16 +623,16 @@ public final class PlayerDamagedEvents {
         if (GeneralUtils.testChance(1, 5)) {
             Player p = friend.getPlayer();
             PotionEffect speed = p.hasPotionEffect(PotionEffectType.SPEED) ? p.getPotionEffect(PotionEffectType.SPEED) : null;
-            PotionEffect haste = p.hasPotionEffect(PotionEffectType.FAST_DIGGING) ? p.getPotionEffect(PotionEffectType.FAST_DIGGING) : null;
+            PotionEffect haste = p.hasPotionEffect(PotionEffectType.HASTE) ? p.getPotionEffect(PotionEffectType.HASTE) : null;
             if (speed == null) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 0));
             } else {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, Math.min(speed.getAmplifier() + 1, 9)));
             }
             if (haste == null) {
-                p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 1));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 200, 1));
             } else {
-                p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, Math.min(haste.getAmplifier() + 2, 19)));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 200, Math.min(haste.getAmplifier() + 2, 19)));
             }
         }
     }

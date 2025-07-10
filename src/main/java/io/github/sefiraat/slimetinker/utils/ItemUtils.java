@@ -733,7 +733,7 @@ public final class ItemUtils {
     public static ItemStack getItemByID(@Nonnull String id, int amount) {
         SlimefunItem sfItem = SlimefunItem.getById(id);
         if (sfItem != null) {
-            return new CustomItemStack(sfItem.getItem(), amount);
+            return CustomItemStack.create(sfItem.getItem(), amount);
         } else {
             return null;
         }
